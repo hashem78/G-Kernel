@@ -2616,6 +2616,7 @@ cont:
 		}
 		path[0].p_depth = depth;
 		path[0].p_hdr = ext_inode_hdr(inode);
+		i = 0;
 
 		i = 0;
 
