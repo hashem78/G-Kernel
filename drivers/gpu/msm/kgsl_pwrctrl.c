@@ -616,6 +616,16 @@ static int kgsl_pwrctrl_gpu_available_frequencies_show(
 	for (index = 0; index < pwr->num_pwrlevels - 1; index++)
 		num_chars += snprintf(buf + num_chars, PAGE_SIZE, "%d ",
 		pwr->pwrlevels[index].gpu_freq);
+	if (index == 0)
+		{
+			num_chars += snprintf(buf + num_chars, PAGE_SIZE, "%d ",627000000);
+			num_chars += snprintf(buf + num_chars, PAGE_SIZE, "%d ",600000000);
+			num_chars += snprintf(buf + num_chars, PAGE_SIZE, "%d ",544000000);
+			num_chars += snprintf(buf + num_chars, PAGE_SIZE, "%d ",504000000);
+			num_chars += snprintf(buf + num_chars, PAGE_SIZE, "%d ",450000000);
+		}
+		else
+			num_chars += snprintf(buf + num_chars, PAGE_SIZE, "%d ",pwr->pwrlevels[index].gpu_freq);
 	buf[num_chars++] = '\n';
 	return num_chars;
 }
