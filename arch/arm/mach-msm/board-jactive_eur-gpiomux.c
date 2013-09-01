@@ -27,14 +27,12 @@
 #include "board-8064.h"
 #include <mach/apq8064-gpio.h>
 
-#if 0
 /* The SPI configurations apply to GSBI 5*/
 static struct gpiomux_setting gpio_spi_config = {
 	.func = GPIOMUX_FUNC_2,
 	.drv = GPIOMUX_DRV_12MA,
 	.pull = GPIOMUX_PULL_DOWN,
 };
-#endif
 
 #if defined(CONFIG_KS8851) || defined(CONFIG_KS8851_MODULE)
 static struct gpiomux_setting gpio_eth_config = {
@@ -68,14 +66,12 @@ struct msm_gpiomux_config apq8064_ethernet_configs[] = {
 };
 #endif
 
-#if !defined(CONFIG_USB_EHCI_MSM_HSIC)
 /* Chip selects for SPI clients */
 static struct gpiomux_setting gpio_spi_cs_config = {
 	.func = GPIOMUX_FUNC_GPIO,
 	.drv = GPIOMUX_DRV_12MA,
 	.pull = GPIOMUX_PULL_UP,
 };
-#endif
 
 /* Chip selects for EPM SPI clients */
 static struct gpiomux_setting gpio_epm_spi_cs_config = {
