@@ -179,7 +179,7 @@ static void sensor_power_on_vdd(int, int);
 #define HOLE_SIZE		0x20000
 #define MSM_CONTIG_MEM_SIZE  0x65000
 #ifdef CONFIG_MSM_IOMMU
-#define MSM_ION_MM_SIZE		0x6200000    /* 56MB(0x3800000) -> 98MB */
+#define MSM_ION_MM_SIZE		0x6600000    /* 56MB(0x3800000) -> 98MB */
 #define MSM_ION_SF_SIZE		0
 #define MSM_ION_QSECOM_SIZE	0x1700000    /* 7.5MB(0x780000) -> 23MB */
 #define MSM_ION_HEAP_NUM	7
