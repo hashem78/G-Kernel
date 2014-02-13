@@ -18,7 +18,7 @@
 #define PLATFORM_DRIVER_NAME "msm_camera_s5k6b2yx"
 #define s5k6b2yx_obj s5k6b2yx_##obj
 
-#define VISION_MODE_TEST_PATTERN 	0
+#define VISION_MODE_TEST_PATTERN	0
 
 #define VISION_MODE_AE_REG_ADDR		0x600a
 #define VISION_MODE_AE_BACKLIGHT	0x7a
@@ -26,7 +26,7 @@
 
 #define VISION_MODE_SET_FPS_ADDR         0x6027
 #define VISION_MODE_SET_FPS_5           0x1
-#define VISION_MODE_SET_FPS_10          0X2  
+#define VISION_MODE_SET_FPS_10          0X2
 #define VISION_MODE_FPS_5_VAL           0xD0
 #define VISION_MODE_FPS_10_VAL          0x68
 

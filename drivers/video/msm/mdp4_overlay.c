@@ -926,6 +926,7 @@ static void mdp4_overlay_vg_get_src_offset(struct mdp4_overlay_pipe *pipe,
 			*chroma_off = pipe->src_x +
 				(pipe->src_y * pipe->srcp1_ystride);
 			break;
+
 		case MDP_YCBYCR_H2V1:
 		case MDP_YCRYCB_H2V1:
 			if (pipe->src_x & 0x1)
@@ -1336,15 +1337,15 @@ int mdp4_overlay_format2pipe(struct mdp4_overlay_pipe *pipe)
 		pipe->unpack_align_msb = 0;
 		pipe->unpack_count = 3;
 		if (pipe->src_format == MDP_YCRYCB_H2V1) {
-			pipe->element3 = C0_G_Y;  /* G */
-			pipe->element2 = C2_R_Cr;  /* R */
-			pipe->element1 = C0_G_Y;  /* G */
-			pipe->element0 = C1_B_Cb;  /* B */
+			pipe->element3 = C0_G_Y;	/* G */
+			pipe->element2 = C2_R_Cr;	/* R */
+			pipe->element1 = C0_G_Y;	/* G */
+			pipe->element0 = C1_B_Cb;	/* B */
 		} else if (pipe->src_format == MDP_YCBYCR_H2V1) {
-			pipe->element3 = C0_G_Y;  /* G */
-			pipe->element2 = C1_B_Cb;  /* B */
-			pipe->element1 = C0_G_Y;  /* G */
-			pipe->element0 = C2_R_Cr;  /* R */
+			pipe->element3 = C0_G_Y;	/* G */
+			pipe->element2 = C1_B_Cb;	/* B */
+			pipe->element1 = C0_G_Y;	/* G */
+			pipe->element0 = C2_R_Cr;	/* R */
 		}
 		pipe->bpp = 2;		/* 2 bpp */
 		pipe->chroma_sample = MDP4_CHROMA_H2V1;
