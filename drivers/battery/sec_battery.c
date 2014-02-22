@@ -1934,7 +1934,8 @@ static void sec_bat_cable_work(struct work_struct *work)
 	wake_lock(&battery->monitor_wake_lock);
 	queue_work(battery->monitor_wqueue, &battery->monitor_work);
 end_of_cable_work:
-	wake_unlock(&battery->cable_wake_lock);
+	if(battery->cable_type == POWER_SUPPLY_TYPE_BATTERY)
+		wake_unlock(&battery->cable_wake_lock);
 	dev_dbg(battery->dev, "%s: End\n", __func__);
 }
 
