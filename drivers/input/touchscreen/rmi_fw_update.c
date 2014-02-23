@@ -81,8 +81,8 @@
 
 #if defined(CONFIG_MACH_JACTIVE_EUR) || defined(CONFIG_MACH_JACTIVE_ATT)
 #define FW_SUPPORT_HSYNC03(x)	 (strncmp(x->product_id, "SY 03", 5) == 0)
-#define FW_SUPPORT_HSYNC04(x)	 ((strncmp(x->product_id, "SY 04", 5) == 0)|| (strncmp(x->product_id, "S5000B", 6) == 0))
-#define FW_NOT_SUPPORT_HSYNC(x)	 ((strncmp(x->product_id, "SY 01", 5) == 0) || (strncmp(x->product_id, "SY 02", 5) == 0))
+#define FW_SUPPORT_HSYNC04(x)	 (strncmp(x->product_id, "SY 04", 5) == 0)
+#define FW_NOT_SUPPORT_HSYNC(x)	 ((strncmp(x->product_id, "SY 01", 5) == 0) || (strncmp(x->product_id, "S5000B", 6) == 0) || (strncmp(x->product_id, "SY 02", 5) == 0))
 #endif
 
 static ssize_t fwu_sysfs_show_image(struct file *data_file,
