@@ -247,16 +247,18 @@ static int32_t msm_actuator_move_focus(
 	int dir = move_params->dir;
 	int32_t num_steps = move_params->num_steps;
 
-	CDBG("%s: dir %d, num_steps %d\n",
-		__func__, dir, num_steps);
+	CDBG("%s called, dir %d, num_steps %d\n",
+		__func__,
+		dir,
+		num_steps);
 
 	if (dest_step_pos == a_ctrl->curr_step_pos)
 		return rc;
 
 	curr_lens_pos = a_ctrl->step_position_table[a_ctrl->curr_step_pos];
 	a_ctrl->i2c_tbl_index = 0;
-	CDBG("%s: curr_step_pos =%d, curr_lens_pos=%d, sign_dir=%d, dest_step_pos =%d\n",
-		__func__, a_ctrl->curr_step_pos, curr_lens_pos, sign_dir, dest_step_pos);
+	CDBG("curr_step_pos =%d dest_step_pos =%d curr_lens_pos=%d\n",
+		a_ctrl->curr_step_pos, dest_step_pos, curr_lens_pos);
 
 	while (a_ctrl->curr_step_pos != dest_step_pos) {
 		step_boundary =
