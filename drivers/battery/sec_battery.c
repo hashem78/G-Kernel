@@ -1934,8 +1934,7 @@ static void sec_bat_cable_work(struct work_struct *work)
 	wake_lock(&battery->monitor_wake_lock);
 	queue_work(battery->monitor_wqueue, &battery->monitor_work);
 end_of_cable_work:
-	if(battery->cable_type == POWER_SUPPLY_TYPE_BATTERY)
-		wake_unlock(&battery->cable_wake_lock);
+	wake_unlock(&battery->cable_wake_lock);
 	dev_dbg(battery->dev, "%s: End\n", __func__);
 }
 
@@ -2675,6 +2674,11 @@ static int sec_bat_get_property(struct power_supply *psy,
 		break;
 	case POWER_SUPPLY_PROP_ONLINE:
 		val->intval = battery->cable_type;
+		if ((val->intval == POWER_SUPPLY_TYPE_BATTERY) &&
+				(battery->pdata->is_lpm())) {
+			/* Userspace expects 0 for no-supply */
+			val->intval = 0;
+			}
 		break;
 	case POWER_SUPPLY_PROP_TECHNOLOGY:
 		val->intval = battery->pdata->technology;

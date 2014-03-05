@@ -1284,26 +1284,28 @@ static struct msm_gpiomux_config sx150x_int_configs[] __initdata = {
 	},
 };
 
-static struct gpiomux_setting sd_det_active_cfg = {
+static struct gpiomux_setting sd_det_line = {
 	.func = GPIOMUX_FUNC_GPIO,
 	.drv = GPIOMUX_DRV_2MA,
 	.pull = GPIOMUX_PULL_UP,
 	.dir = GPIOMUX_IN,
 };
 
+/*
 static struct gpiomux_setting sd_det_suspended_cfg = {
 	.func = GPIOMUX_FUNC_GPIO,
 	.drv = GPIOMUX_DRV_2MA,
 	.pull = GPIOMUX_PULL_NONE,
 	.dir = GPIOMUX_IN,
 };
+*/
 
 static struct msm_gpiomux_config msm8064_sd_det_config[] = {
 	{
 		.gpio = 26,	/* SD Card Detect Line */
 		.settings = {
-			[GPIOMUX_SUSPENDED] = &sd_det_suspended_cfg,
-			[GPIOMUX_ACTIVE] = &sd_det_active_cfg,
+			[GPIOMUX_SUSPENDED] = &sd_det_line,
+			[GPIOMUX_ACTIVE] = &sd_det_line,
 		},
 	},
 };
