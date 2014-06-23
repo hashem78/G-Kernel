@@ -80,6 +80,9 @@ struct cpu_freq {
 };
 
 static DEFINE_PER_CPU(struct cpu_freq, cpu_freq_info);
+#ifdef CONFIG_TURBO_BOOST
+extern int msm_turbo(int);
+#endif
 
 #ifdef CONFIG_SEC_DVFS
 #ifdef CONFIG_SEC_DVFS_BOOSTER
@@ -184,7 +187,9 @@ static int set_cpu_freq(struct cpufreq_policy *policy, unsigned int new_freq,
 			pr_debug("min: limiting freq to %d\n", new_freq);
 		}
 	}
-
+#ifdef CONFIG_TURBO_BOOST
+	new_freq = msm_turbo(new_freq);
+#endif
 #ifdef CONFIG_SEC_DVFS
 	if (lower_limit_freq || upper_limit_freq) {
 		unsigned int t_freq = new_freq;
