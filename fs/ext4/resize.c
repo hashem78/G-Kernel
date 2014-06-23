@@ -1150,7 +1150,7 @@ static void ext4_update_super(struct super_block *sb,
 	struct ext4_new_group_data *group_data = flex_gd->groups;
 	struct ext4_sb_info *sbi = EXT4_SB(sb);
 	struct ext4_super_block *es = sbi->s_es;
-	int i, ret;
+	// int i, ret;
 
 	BUG_ON(flex_gd->count == 0 || group_data == NULL);
 	/*
@@ -1163,10 +1163,10 @@ static void ext4_update_super(struct super_block *sb,
 	 * blocks/inodes before the group is live won't actually let us
 	 * allocate the new space yet.
 	 */
-	for (i = 0; i < flex_gd->count; i++) {
-		blocks_count += group_data[i].blocks_count;
-		free_blocks += group_data[i].free_blocks_count;
-	}
+	// for (i = 0; i < flex_gd->count; i++) {
+	//	blocks_count += group_data[i].blocks_count;
+	//	free_blocks += group_data[i].free_blocks_count;
+	//}
 
 	reserved_blocks = ext4_r_blocks_count(es) * 100;
 	do_div(reserved_blocks, ext4_blocks_count(es));
