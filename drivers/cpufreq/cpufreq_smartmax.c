@@ -1424,21 +1424,6 @@ static int __init cpufreq_smartmax_init(void) {
 		return -EFAULT;
 	}
 
-	up_rate = DEFAULT_UP_RATE;
-	down_rate = DEFAULT_DOWN_RATE;
-	suspend_ideal_freq = DEFAULT_SUSPEND_IDEAL_FREQ;
-	awake_ideal_freq = DEFAULT_AWAKE_IDEAL_FREQ;
-	ideal_freq = awake_ideal_freq;
-	ramp_up_step = DEFAULT_RAMP_UP_STEP;
-	ramp_down_step = DEFAULT_RAMP_DOWN_STEP;
-	max_cpu_load = DEFAULT_MAX_CPU_LOAD;
-	min_cpu_load = DEFAULT_MIN_CPU_LOAD;
-	sampling_rate = DEFAULT_SAMPLING_RATE;
-	input_boost_duration = DEFAULT_INPUT_BOOST_DURATION;
-	io_is_busy = DEFAULT_IO_IS_BUSY;
-	ignore_nice = DEFAULT_IGNORE_NICE;
-	touch_poke_freq = DEFAULT_TOUCH_POKE_FREQ;
-	boost_freq = DEFAULT_BOOST_FREQ;
 
 	/* Initalize per-cpu data: */
 	for_each_possible_cpu(i)
