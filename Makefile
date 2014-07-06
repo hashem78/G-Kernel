@@ -376,7 +376,10 @@ KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -Wno-format-security \
                    -Wno-sizeof-pointer-memaccess \
 	            -mno-unaligned-access \
-		   -fno-delete-null-pointer-checks
+		   -fno-delete-null-pointer-checks \
+				-fgraphite-identity -ftree-loop-distribution \
+				-pipe -floop-block -ftree-loop-linear \
+				-floop-parallelize-all
 KBUILD_AFLAGS_KERNEL :=
 KBUILD_CFLAGS_KERNEL :=
 KBUILD_AFLAGS   := -D__ASSEMBLY__
