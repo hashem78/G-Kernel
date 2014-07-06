@@ -706,6 +706,12 @@ config BU52031NVX_POUCHDETECT
 	help
 	  depends on BU52031NVX
 
+config BLX
+	bool "Support for Battery Life eXtender"
+	default y
+	help
+         Say Y here to enable Battery Life eXtender
+
 config BCM2079X_NFC_I2C
 	tristate "BCM2079X NFC driver for I2C interface"
 	depends on I2C
