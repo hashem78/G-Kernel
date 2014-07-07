@@ -193,7 +193,8 @@ SUBARCH := $(shell uname -m | sed -e s/i.86/i386/ -e s/sun4u/sparc64/ \
 # Note: Some architectures assign CROSS_COMPILE in their arch/*/Makefile
 export KBUILD_BUILDHOST := $(SUBARCH)
 ARCH		?= arm
-CROSS_COMPILE	?= $(CCACHE) /opt/toolchains/lin2/bin/arm-cortex_a15-linux-gnueabihf-
+CROSS_COMPILE	?= $(CCACHE) /home/mythi/lin4/bin/arm-cortex_a15-linux-gnueabihf-
+# CROSS_COMPILE	?= $(CCACHE) /opt/toolchains/lin2/bin/arm-cortex_a15-linux-gnueabihf-
 
 # Architecture as present in compile.h
 UTS_MACHINE 	:= $(ARCH)
@@ -371,6 +372,7 @@ LINUXINCLUDE    := -I$(srctree)/arch/$(hdr-arch)/include \
 KBUILD_CPPFLAGS := -D__KERNEL__
 
 KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
+                   -Wno-aggressive-loop-optimizations \
 		   -fno-strict-aliasing -fno-common \
 		   -Werror-implicit-function-declaration \
 		   -Wno-format-security \
