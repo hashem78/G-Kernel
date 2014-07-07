@@ -133,6 +133,13 @@ config CPU_FREQ_DEFAULT_GOV_SMARTASSV2
 	help
 		Use the CPUFreq governor 'smartassV2' as default.
 
+config CPU_FREQ_DEFAULT_GOV_PEGASUSQ
+	bool "pegasusq"
+	select CPU_FREQ_GOV_PEGASUSQ
+	help
+	  Use the CPUFreq governor 'pegasusq' as default.
+
+
 config CPU_FREQ_DEFAULT_GOV_INTELLIACTIVE
 	bool "intelliactive"
 	select CPU_FREQ_GOV_INTELLIACTIVE
@@ -368,6 +375,10 @@ config CPU_FREQ_GOV_PERFORMANCE
 	  module will be called cpufreq_performance.
 
 	  If in doubt, say Y.
+
+config CPU_FREQ_GOV_PEGASUSQ
+	tristate "'pegasusq' cpufreq policy governor"
+
 
 config CPU_FREQ_GOV_POWERSAVE
 	tristate "'powersave' governor"
