@@ -30,31 +30,7 @@
 #include <linux/earlysuspend.h>
 #endif
 
-
 /*#define dev_dbg(dev, fmt, arg...) dev_info(dev, fmt, ##arg)*/
-
-#ifdef CONFIG_TOUCHSCREEN_SWEEP2WAKE
-#include <linux/input/sweep2wake.h>
-#endif
-
-#if (CHECK_ANTITOUCH |CHECK_ANTITOUCH_SERRANO |CHECK_ANTITOUCH_GOLDEN)
-#define MXT_T61_TIMER_ONESHOT			0
-#define MXT_T61_TIMER_REPEAT			1
-#define MXT_T61_TIMER_CMD_START		1
-#define MXT_T61_TIMER_CMD_STOP		2
-#endif
-
-#if ENABLE_TOUCH_KEY
-int tsp_keycodes[NUMOFKEYS] = {
-	KEY_MENU,
-	KEY_BACK,
-};
-char *tsp_keyname[NUMOFKEYS] = {
-	"Menu",
-	"Back",
-};
-
-#endif
 
 /* TODO: touch_is_pressed
  * As I know this global variable has been added to blocking touchkey input
@@ -87,13 +63,11 @@ static int mxt_read_mem(struct mxt_data *data, u16 reg, u8 len, void *buf)
 		return 0;
 #endif
 
-	for (i = 0; i < 10 ; i++) {
+	for (i = 0; i < 3 ; i++) {
 		ret = i2c_transfer(data->client->adapter, msg, 2);
-		if (ret < 0) {
+		if (ret < 0)
 			dev_err(&data->client->dev, "%s fail[%d] address[0x%x]\n",
 				__func__, ret, le_reg);
-			msleep(10);
-		}
 		else
 			break;
 	}
@@ -114,13 +88,11 @@ static int mxt_write_mem(struct mxt_data *data,
 	put_unaligned_le16(cpu_to_le16(reg), tmp);
 	memcpy(tmp + 2, buf, len);
 
-	for (i = 0; i < 10 ; i++) {
+	for (i = 0; i < 3 ; i++) {
 		ret = i2c_master_send(data->client, tmp, sizeof(tmp));
-		if (ret < 0) {
+		if (ret < 0)
 			dev_err(&data->client->dev,	"%s %d times write error on address[0x%x,0x%x]\n",
 				__func__, i, tmp[1], tmp[0]);
-			msleep(10);
-		}
 		else
 			break;
 	}
@@ -1627,57 +1599,11 @@ static int mxt_start(struct mxt_data *data)
 	error = mxt_power_on(data);
 	if (error)
 		dev_err(&data->client->dev, "Fail to start touch\n");
-
-	} else {
-		if (system_rev == 0) {
-			mxt_command_calibration(data);
-			dev_err(&data->client->dev, "Force calibration\n");
-		}
-		#ifdef CONFIG_TOUCHSCREEN_SWEEP2WAKE
-		if (s2w_switch > 1) {
-			disable_irq_wake(data->client->irq);
-			return error;
-		}
-		#endif
-
+	else
 		enable_irq(data->client->irq);
 
 	return error;
 }
-
-#ifdef USE_OPEN_CLOSE
-#ifdef CONFIG_TOUCHSCREEN_SWEEP2WAKE
-static int mxt_stop_force(struct mxt_data *data) {
-	int error = 0;
-	if (!data->mxt_enabled) {
-		dev_err(&data->client->dev,
-			"%s. but touch already off\n", __func__);
-		return error;
-	}
-	disable_irq(data->client->irq);
-
-	error = mxt_power_off(data);
-	if (error) {
-		dev_err(&data->client->dev, "Fail to stop touch\n");
-		goto err_power_off;
-	}
-	mxt_release_all_finger(data);
-
-#if ENABLE_TOUCH_KEY
-	mxt_release_all_keys(data);
-#endif
-
-#if TSP_BOOSTER
-	set_dvfs_lock(data, -1);
-#endif
-	return 0;
-
-err_power_off:
-	enable_irq(data->client->irq);
-	return error;
-}
-#endif
-#endif
 
 /* Need to be called by function that is blocked with mutex */
 static int mxt_stop(struct mxt_data *data)
@@ -1689,20 +1615,6 @@ static int mxt_stop(struct mxt_data *data)
 			"%s. but touch already off\n", __func__);
 		return error;
 	}
-
-
-#ifdef CONFIG_TOUCHSCREEN_SWEEP2WAKE	
-	if (s2w_switch > 1) {
-		pr_info("MXT: mxts mxt_stop not stopping for sweep2wake");
-		mxt_release_all_finger(data);
-		#if ENABLE_TOUCH_KEY
-			mxt_release_all_keys(data);
-		enable_irq_wake(data->client->irq);
-		#endif
-		return error;
-	}
-#endif
-
 	disable_irq(data->client->irq);
 
 	error = mxt_power_off(data);
@@ -1813,10 +1725,6 @@ static int mxt_touch_finish_init(struct mxt_data *data)
 	*/
 
 	mxt_stop(data);
-
-#ifdef USE_OPEN_CLOSE
-	mxt_stop_force(data);
-#endif
 
 	/* for blocking to be excuted open function untile finishing ts init */
 	complete_all(&data->init_done);
@@ -2026,7 +1934,6 @@ static void mxt_early_suspend(struct early_suspend *h)
 {
 	struct mxt_data *data = container_of(h, struct mxt_data,
 								early_suspend);
-
 #if TSP_INFORM_CHARGER
 	cancel_delayed_work_sync(&data->noti_dwork);
 #endif
@@ -2265,5 +2172,3 @@ module_i2c_driver(mxt_i2c_driver);
 MODULE_DESCRIPTION("Atmel MaXTouch driver");
 MODULE_AUTHOR("bumwoo.lee<bw365.lee@samsung.com>");
 MODULE_LICENSE("GPL");
-
-
